@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Event Examples</title>
+    <style>
+
+        #secretMessage {
+            display: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        button {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<p>задание 1(нажми на кнопку, чтобы вывести сообщение в консоль):</p>
+<button id="hello">скажи привет</button>
+<button id="hau">скажи как твои дела</button>
+<button id="bey">скажи пока</button>
+
+<p>задание 2(нажми на кнопку, чтобы изменить фон):</p>
+<button id="colorButton">Новый цвет!</button>
+
+<p>Эхо(нажми на текст и он повторится в консоли):</p>
+<ul id="list">
+    <li>Привеееет</li>
+    <li>Я тут</li>
+    <li>Кто тут</li>
+</ul>
+
+<p>Введите секретный код (тсс. попробуйте 1234):</p>
+<input type="text" id="secretInput">
+
+<div id="secretMessage">Ого, Вы верно ввели код!</div>
+
+<script>
+    //Задание 1. Обработка нажатий -> вывести текст в консоль
+    document.getElementById('hello').addEventListener('click', function() {
+        console.log('приветики');
+    });
+
+    document.getElementById('hau').addEventListener('click', function() {
+        console.log('мои дела? мои хорошо');
+    });
+
+    document.getElementById('bey').addEventListener('click', function() {
+        console.log('Пока-пока');
+    });
+
+    //Задание 2. Обработка нажатий -> изменить цвет
+    document.getElementById('colorButton').addEventListener('click', function() {
+        var randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+        document.body.style.backgroundColor = randomColor;
+    });
+
+    //Задание 3. Список
+    document.getElementById('list').addEventListener('click', function(event) {
+        if (event.target.tagName === 'LI') {
+            console.log(event.target.textContent);
+        }
+    });
+
+    //Задание 4. Секретный код
+    document.addEventListener('DOMContentLoaded', () => {
+        const secretCode = '1234';
+        let inputSequence = '';
+
+        const secretInput = document.getElementById('secretInput');
+        const secretMessage = document.getElementById('secretMessage');
+
+        secretInput.addEventListener('input', () => {
+            if (secretInput.value === '') {
+                inputSequence = '';
+            }
+        });
+
+        secretInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Backspace') {
+                inputSequence = inputSequence.slice(0, -1);
+            } else {
+                inputSequence += event.key;
+            }
+
+            if (inputSequence === secretCode) {
+                secretMessage.style.display = 'block';
+            } else {
+                secretMessage.style.display = 'none';
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>
