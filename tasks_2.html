@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Link Styling</title>
+    <style>
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        a:visited {
+            color: gray;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: green;
+        }
+        a:active {
+            color: blue;
+        }
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<a href="https://www.example.com">Задание 1. Тык на ссылку</a>
+<br>
+
+<p>задание 2 (TODO-приложение):</p>
+
+<input type="text" id="taskInput" placeholder="Ожидание ввода" />
+<button id="addButton">Добавить задачу</button>
+<div id="tasksContainer"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addButton = document.getElementById('addButton')
+        const taskInput = document.getElementById('taskInput')
+        const tasksContainer = document.getElementById('tasksContainer')
+        addButton.addEventListener('click', function () {
+            const taskName = taskInput.value
+            const taskItem = document.createElement('div')
+            const checkbox = document.createElement('input')
+            checkbox.type = 'checkbox'
+            checkbox.addEventListener('change', function () {
+                if (this.checked) {
+                    taskItem.classList.add('completed')
+                } else {
+                    taskItem.classList.remove('completed')
+                }
+            })
+            const taskText = document.createTextNode(taskName)
+            taskItem.appendChild(checkbox)
+            taskItem.appendChild(taskText)
+            tasksContainer.appendChild(taskItem)
+            taskInput.value = ''
+        })
+        taskInput.addEventListener('input', function () {
+            addButton.disabled = !taskInput.value.trim()
+        })
+        addButton.disabled = true
+    })
+</script>
+</body>
+</html>
